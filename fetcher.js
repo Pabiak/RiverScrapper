@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { promisify } = require("util");
 
 const stations = {
   152200020: "Trzciniec",
@@ -27,8 +26,6 @@ const selectedFiles = fs.readdirSync(folderPath).filter((filename) => {
   const match = regex.exec(filename);
   return match && years.includes(match[1]) && months.includes(match[2]);
 });
-
-const readFileAsync = promisify(fs.readFile);
 
 const getYearFromFilename = (filename) => {
   const regex = /^codz_([0-9]{4})_[0-9]{2}.csv$/;
@@ -79,7 +76,6 @@ const saveToFile = (stationID, filteredDataByYear) => {
   Object.entries(filteredDataByYear).forEach(([year, data]) => {
     const filename = `./outputFiles/${year}_${stationName}.csv`;
     const fileData = data.join("\n");
-    //console.log(fileData);
     fs.writeFile(filename, fileData, (err) => {
       if (err) throw err;
       console.log(
