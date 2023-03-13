@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { promisify } = require("util");
 
 const stations = {
   152200020: "Trzciniec",
@@ -8,7 +9,15 @@ const months = [
   "01",
   "02",
   "03",
- 
+  "04",
+  "05",
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12",
 ];
 const years = ["2015", "2016", "2017"];
 const folderPath = "./files";
@@ -18,6 +27,8 @@ const selectedFiles = fs.readdirSync(folderPath).filter((filename) => {
   const match = regex.exec(filename);
   return match && years.includes(match[1]) && months.includes(match[2]);
 });
+
+const readFileAsync = promisify(fs.readFile);
 
 const getYearFromFilename = (filename) => {
   const regex = /^codz_([0-9]{4})_[0-9]{2}.csv$/;
@@ -30,22 +41,18 @@ const getYearFromFilename = (filename) => {
 
 const stationKeys = Object.keys(stations);
 
-stationKeys.forEach((station) => {
+stationKeys.forEach(async (station) => {
   const filteredDataByYear = {};
-
-  selectedFiles.forEach((file) => {
-    console.log(file)
+  for (const file of selectedFiles) {
     const year = getYearFromFilename(file);
-    if (!year) return;
+    if (!year) continue;
 
-    fs.readFile(`${folderPath}/${file}`, "utf-8", (err, data) => {
-      if (err) console.log(err);
-
+    try {
+      const data = await fs.promises.readFile(`${folderPath}/${file}`, "utf-8");
       const lines = data.split("\n");
       const rivers = lines.filter((line) => {
         return getRiverDataById(line, station);
       });
-      console.log("Rivers:", rivers); // Dodatkowe log
 
       if (!filteredDataByYear[year]) {
         filteredDataByYear[year] = [];
@@ -56,8 +63,10 @@ stationKeys.forEach((station) => {
       if (file === selectedFiles[selectedFiles.length - 1]) {
         saveToFile(station, filteredDataByYear);
       }
-    });
-  });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 });
 
 const getRiverDataById = (line, id) => {
