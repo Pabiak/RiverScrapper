@@ -1,4 +1,6 @@
-const fs = require("fs");
+import helpers from './helpers.js';
+import fs from 'fs';
+const { getYearFromFilename, getRiverDataById, saveToFile } = helpers;
 
 const stations = {
   152200020: "Trzciniec",
@@ -27,15 +29,6 @@ const selectedFiles = fs.readdirSync(folderPath).filter((filename) => {
   return match && years.includes(match[1]) && months.includes(match[2]);
 });
 
-const getYearFromFilename = (filename) => {
-  const regex = /^codz_([0-9]{4})_[0-9]{2}.csv$/;
-  const match = regex.exec(filename);
-  if (match) {
-    return match[1];
-  }
-  return null;
-};
-
 const stationKeys = Object.keys(stations);
 
 stationKeys.forEach(async (station) => {
@@ -58,29 +51,10 @@ stationKeys.forEach(async (station) => {
       filteredDataByYear[year].push(...rivers);
 
       if (file === selectedFiles[selectedFiles.length - 1]) {
-        saveToFile(station, filteredDataByYear);
+        saveToFile(station, filteredDataByYear, stations);
       }
     } catch (err) {
       console.log(err);
     }
   }
 });
-
-const getRiverDataById = (line, id) => {
-  if (!line.includes(id)) return;
-  return line;
-};
-
-const saveToFile = (stationID, filteredDataByYear) => {
-  const stationName = stations[stationID];
-  Object.entries(filteredDataByYear).forEach(([year, data]) => {
-    const filename = `./outputFiles/${year}_${stationName}.csv`;
-    const fileData = data.join("\n");
-    fs.writeFile(filename, fileData, (err) => {
-      if (err) throw err;
-      console.log(
-        `Dane dla stacji ${stationName} z roku ${year} zostały zapisane do pliku ${filename}.`
-      );
-    });
-  });
-};
