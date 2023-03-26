@@ -7,7 +7,7 @@ AquaCrawler to program służący do pobierania i analizowania danych hydrologic
 - [ ] Pobieranie danych z IMGW
 - [x] Pobranie wybranych rzek do osobnych plików
 - [x] Wykresy stanu wody od daty
-- [ ] Wykresy przepływu od daty
+- [x] Wykresy przepływu od daty
 - [ ] Wykres krzywej natężenia przepływu
 - [ ] Wykresy stanu wody dla dwóch stacji w półroczu zimowym (listopad - kwiecień)
 - [ ] Wstawienie danych temperatury do templatki
@@ -17,11 +17,12 @@ AquaCrawler to program służący do pobierania i analizowania danych hydrologic
 ### Wykres stanu wody od daty
 
 Wykres przedstawiający zmianę stanu wody dla wybranej stacji pomiarowej od wybranej daty. Na osi Y znajdują się wartości stanu wody, a na osi X daty pomiarów. 
-![Wykres stanu wody od daty](./img/stanwody.png)
+![Wykres stanu wody od daty](./img/stanWody.png)
 
 ### Wykres przepływu od daty
 
 Wykres przedstawiający zmianę przepływu dla wybranej stacji pomiarowej od wybranej daty. Na osi Y znajdują się wartości przepływu, a na osi X daty pomiarów.
+![Wykres stanu wody od daty](./img/przeplywWody.png)
 
 ### Krzywa natężenia przepływu
 

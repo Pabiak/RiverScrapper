@@ -2,36 +2,44 @@ import Chart from 'chart.js/auto';
 import { createCanvas } from 'canvas';
 import fs from 'fs';
 
-const getChart = (filenames, title) => {
-  const data = [];
+const getCharts = async (filenames) => {
+  const waterConditionTitle = 'Wykres stanu wody od daty';
+  const waterFlowTitle = 'Wykres przepływu wody od daty';
   for (const filename of filenames) {
-    fs.readFile(filename.toString(), 'utf8', (err, fileData) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+    const waterConditionData = [];
+    const waterFlowData = [];
+    try {
+      const fileData = fs.readFileSync(filename.toString(), 'utf8');
       const rows = fileData.trim().split('\n');
       rows.forEach((row) => {
         const [
           id,
-          miejscowosc,
-          nazwa_rzeki,
-          rok,
-          miesiac,
-          dzien,
-          stan_wody,
-          przeplyw,
+          city,
+          riverName,
+          year,
+          month,
+          day,
+          waterCondition,
+          waterFlow,
         ] = row.split(',');
 
-        const date = `${rok}-${miesiac}-${dzien}`
-          .replace(/"/g, '')
-          .split('T')[0];
-        data.push({ x: date, y: stan_wody });
+        const date = `${year}-${month}-${day}`.replace(/"/g, '').split('T')[0];
+        waterConditionData.push({ x: date, y: waterCondition });
+        waterFlowData.push({ x: date, y: waterFlow });
       });
-      const canvas = createChart(data, title);
 
-      saveChart(canvas, filename, title);
-    });
+      const waterConditionCanvas = createChart(
+        waterConditionData,
+        waterConditionTitle
+      );
+      console.log(waterConditionData);
+      const waterFlowCanvas = createChart(waterFlowData, waterFlowTitle);
+      console.log(waterFlowData);
+      saveChart(waterConditionCanvas, filename, waterConditionTitle);
+      saveChart(waterFlowCanvas, filename, waterFlowTitle);
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 
@@ -45,7 +53,7 @@ const createChart = (data, title) => {
           label: title.toString(),
           data: data.map((d) => d.y), // Oś y - wartości drugiej kolumny
           backgroundColor: 'rgba(54, 162, 235, 0.25)', // Kolor wypełnienia obszaru pod wykresem
-          borderColor: 'rgba(54, 162, 235,1)', // Kolor linii wykresu
+          borderColor: 'rgba(54, 162, 235)', // Kolor linii wykresu
           borderWidth: 2, // Grubość linii wykresu
           pointRadius: 0, //Brak zaznaczeń punktów
         },
@@ -56,6 +64,10 @@ const createChart = (data, title) => {
         y: {
           ticks: {
             beginAtZero: true, // Wyświetlanie osi y od zera
+          },
+          title: {
+            display: true,
+            text: 'Powierzchnia m³',
           },
         },
       },
@@ -79,4 +91,4 @@ const saveChart = (canvas, filename, title) => {
   out.on('finish', () => console.log(`The ${chartName} file was created.`));
 };
 
-export default getChart;
+export default getCharts;

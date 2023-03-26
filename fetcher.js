@@ -1,6 +1,6 @@
 import helpers from './helpers.js';
 import fs from 'fs';
-import getChart from './chart.js';
+import getCharts from './chartGenerator.js';
 const { getYearFromFilename, getRiverDataById, saveToFile } = helpers;
 
 const stations = {
@@ -54,7 +54,7 @@ stationKeys.forEach(async (station) => {
       if (file === selectedFiles[selectedFiles.length - 1]) {
         saveToFile(station, filteredDataByYear, stations)
           .then((filenames) => {
-            getChart(filenames, 'Wykres stanu wody od daty');
+            getCharts(filenames);
           })
           .catch((err) => {
             console.error('Wystąpił błąd:', err);
