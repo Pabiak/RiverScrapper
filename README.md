@@ -17,6 +17,7 @@ AquaCrawler to program służący do pobierania i analizowania danych hydrologic
 ### Wykres stanu wody od daty
 
 Wykres przedstawiający zmianę stanu wody dla wybranej stacji pomiarowej od wybranej daty. Na osi Y znajdują się wartości stanu wody, a na osi X daty pomiarów. 
+![Wykres stanu wody od daty](./img/stanwody.png)
 
 ### Wykres przepływu od daty
 
