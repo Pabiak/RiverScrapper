@@ -3,8 +3,6 @@ import { createCanvas } from 'canvas';
 import fs from 'fs';
 
 const getCharts = async (filenames) => {
-  const waterConditionTitle = 'Wykres stanu wody od daty';
-  const waterFlowTitle = 'Wykres przepływu wody od daty';
   for (const filename of filenames) {
     const waterConditionData = [];
     const waterFlowData = [];
@@ -27,14 +25,20 @@ const getCharts = async (filenames) => {
         waterConditionData.push({ x: date, y: waterCondition });
         waterFlowData.push({ x: date, y: waterFlow });
       });
+      const [year, name] = filename
+        .replace('./outputFiles/', '')
+        .replace('.csv', '')
+        .split('_');
+
+      const waterConditionTitle = `Wykres stanu wody od daty ${name} ${year}`;
+      const waterFlowTitle = `Wykres przepływu wody od daty ${name} ${year}`;
 
       const waterConditionCanvas = createChart(
         waterConditionData,
-        waterConditionTitle
+        waterConditionTitle,
+        "Powierzchnia"
       );
-      console.log(waterConditionData);
-      const waterFlowCanvas = createChart(waterFlowData, waterFlowTitle);
-      console.log(waterFlowData);
+      const waterFlowCanvas = createChart(waterFlowData, waterFlowTitle, "m³/s");
       saveChart(waterConditionCanvas, filename, waterConditionTitle);
       saveChart(waterFlowCanvas, filename, waterFlowTitle);
     } catch (err) {
@@ -43,7 +47,7 @@ const getCharts = async (filenames) => {
   }
 };
 
-const createChart = (data, title) => {
+const createChart = (data, title, text) => {
   const chartConfig = {
     type: 'line', // Typ wykresu liniowy
     data: {
@@ -67,7 +71,7 @@ const createChart = (data, title) => {
           },
           title: {
             display: true,
-            text: 'Powierzchnia m³',
+            text: text.toString(),
           },
         },
       },
