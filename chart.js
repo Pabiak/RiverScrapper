@@ -2,37 +2,39 @@ import Chart from "chart.js/auto";
 import { createCanvas } from "canvas";
 import fs from "fs";
 
-const getChart = () => {
+const getChart = (filenames) => {
   const data = [];
-  fs.readFile("./outputFiles/2015_Borkowo.csv", "utf8", (err, fileData) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    const rows = fileData.trim().split("\n");
-    rows.forEach((row) => {
-      const [
-        id,
-        miejscowosc,
-        nazwa_rzeki,
-        rok,
-        miesiac,
-        dzien,
-        stan_wody,
-        przeplyw,
-      ] = row.split(",");
-      const dateString = `${rok}/${miesiac}/${dzien}`.replace(/"/g, "");
-      const date = new Date(dateString).toISOString().split("T")[0];
-      console.log(date);
-      data.push({ x: date, y: stan_wody });
+  for(const filename of filenames){
+    fs.readFile(filename.toString(), "utf8", (err, fileData) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const rows = fileData.trim().split("\n");
+      rows.forEach((row) => {
+        const [
+          id,
+          miejscowosc,
+          nazwa_rzeki,
+          rok,
+          miesiac,
+          dzien,
+          stan_wody,
+          przeplyw,
+        ] = row.split(",");
+        const dateString = `${rok}/${miesiac}/${dzien}`.replace(/"/g, "");
+        const date = new Date(dateString).toISOString().split("T")[0];
+        //console.log(date);
+        data.push({ x: date, y: stan_wody });
+      });
+      //console.log(data);
+  
+      const canvas = createChart(data);
+  
+      saveChart(canvas, filename);
+      
     });
-    console.log(data);
-
-    const canvas = createChart(data);
-
-    saveChart(canvas);
-    
-  });
+  }
 };
 
 const createChart = (data) => {
@@ -59,6 +61,7 @@ const createChart = (data) => {
           },
         },
       },
+      backgroundColor: "rgba(255, 255, 255, 1)"
     },
   };
 
@@ -68,11 +71,13 @@ const createChart = (data) => {
   return canvas;
 };
 
-const saveChart = (canvas) => {
-    const out = fs.createWriteStream("./outputFiles/chart.png");
+const saveChart = (canvas, filename) => {
+    const chartName = filename.replace(".csv",".png").replace("./outputFiles", "./charts");
+    //console.log(chartName)
+    const out = fs.createWriteStream(chartName);
     const stream = canvas.createPNGStream();
     stream.pipe(out);
-    out.on("finish", () => console.log("The PNG file was created."));
+    out.on("finish", () => console.log(`The ${chartName} file was created.`));
 }
 
 export default getChart;

@@ -3,7 +3,6 @@ import fs from "fs";
 import getChart from "./chart.js";
 const { getYearFromFilename, getRiverDataById, saveToFile } = helpers;
 
-
 const stations = {
   152200020: "Trzciniec",
   152200120: "Borkowo",
@@ -53,7 +52,13 @@ stationKeys.forEach(async (station) => {
       filteredDataByYear[year].push(...rivers);
 
       if (file === selectedFiles[selectedFiles.length - 1]) {
-        saveToFile(station, filteredDataByYear, stations);
+        saveToFile(station, filteredDataByYear, stations)
+          .then((filenames) => {
+            getChart(filenames);
+          })
+          .catch((err) => {
+            console.error("Wystąpił błąd:", err);
+          });
       }
     } catch (err) {
       console.log(err);

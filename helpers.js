@@ -16,16 +16,20 @@ const getYearFromFilename = (filename) => {
   
   const saveToFile = (stationID, filteredDataByYear, stations) => {
     const stationName = stations[stationID];
-    Object.entries(filteredDataByYear).forEach(([year, data]) => {
+    const promises = Object.entries(filteredDataByYear).map(([year, data]) => {
       const filename = `./outputFiles/${year}_${stationName}.csv`;
       const fileData = data.join("\n");
-      fs.writeFile(filename, fileData, (err) => {
-        if (err) throw err;
-        console.log(
-          `Dane dla stacji ${stationName} z roku ${year} zostały zapisane do pliku ${filename}.`
-        );
+      return new Promise((resolve, reject) => {
+        fs.writeFile(filename, fileData, (err) => {
+          if (err) reject(err);
+          console.log(
+            `Dane dla stacji ${stationName} z roku ${year} zostały zapisane do pliku ${filename}.`
+          );
+          resolve(filename);
+        });
       });
     });
+    return Promise.all(promises);
   };
 export default {getYearFromFilename, getRiverDataById, saveToFile};
   
