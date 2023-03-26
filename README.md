@@ -22,7 +22,7 @@ Wykres przedstawiający zmianę stanu wody dla wybranej stacji pomiarowej od wyb
 ### Wykres przepływu od daty
 
 Wykres przedstawiający zmianę przepływu dla wybranej stacji pomiarowej od wybranej daty. Na osi Y znajdują się wartości przepływu, a na osi X daty pomiarów.
-![Wykres stanu wody od daty](./img/przeplywWody.png)
+![Wykres przepływu wody od daty](./img/przeplywWody.png)
 
 ### Krzywa natężenia przepływu
 
