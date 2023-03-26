@@ -1,28 +1,28 @@
-import helpers from "./helpers.js";
-import fs from "fs";
-import getChart from "./chart.js";
+import helpers from './helpers.js';
+import fs from 'fs';
+import getChart from './chart.js';
 const { getYearFromFilename, getRiverDataById, saveToFile } = helpers;
 
 const stations = {
-  152200020: "Trzciniec",
-  152200120: "Borkowo",
+  152200020: 'Trzciniec',
+  152200120: 'Borkowo',
 };
 const months = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12",
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
+  '07',
+  '08',
+  '09',
+  '10',
+  '11',
+  '12',
 ];
-const years = ["2015", "2016", "2017"];
-const folderPath = "./files";
+const years = ['2015', '2016', '2017'];
+const folderPath = './files';
 
 const selectedFiles = fs.readdirSync(folderPath).filter((filename) => {
   const regex = /^codz_([0-9]{4})_([0-9]{2}).csv$/;
@@ -39,8 +39,8 @@ stationKeys.forEach(async (station) => {
     if (!year) continue;
 
     try {
-      const data = await fs.promises.readFile(`${folderPath}/${file}`, "utf-8");
-      const lines = data.split("\n");
+      const data = await fs.promises.readFile(`${folderPath}/${file}`, 'utf-8');
+      const lines = data.split('\n');
       const rivers = lines.filter((line) => {
         return getRiverDataById(line, station);
       });
@@ -54,10 +54,10 @@ stationKeys.forEach(async (station) => {
       if (file === selectedFiles[selectedFiles.length - 1]) {
         saveToFile(station, filteredDataByYear, stations)
           .then((filenames) => {
-            getChart(filenames);
+            getChart(filenames, 'Wykres stanu wody od daty');
           })
           .catch((err) => {
-            console.error("Wystąpił błąd:", err);
+            console.error('Wystąpił błąd:', err);
           });
       }
     } catch (err) {
