@@ -27,6 +27,7 @@ Wykres przedstawiający zmianę przepływu dla wybranej stacji pomiarowej od wyb
 ### Krzywa natężenia przepływu
 
 Wykres przedstawiający krzywą natężenia przepływu, czyli zależność między stanem wody a przepływem dla wybranej stacji pomiarowej. Na osi Y znajdują się wartości stanu wody, a na osi X wartości przepływu.
+![Wykres przepływu wody od daty](./img/krzywaNatezenia.png)
 
 ### Wykresy stanu wody dla dwóch stacji w półroczu zimowym (listopad - kwiecień)
 

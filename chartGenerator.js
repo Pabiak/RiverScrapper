@@ -6,6 +6,7 @@ const getCharts = async (filenames) => {
   for (const filename of filenames) {
     const waterConditionData = [];
     const waterFlowData = [];
+    const curveData = [];
     try {
       const fileData = fs.readFileSync(filename.toString(), 'utf8');
       const rows = fileData.trim().split('\n');
@@ -24,6 +25,10 @@ const getCharts = async (filenames) => {
         const date = `${year}-${month}-${day}`.replace(/"/g, '').split('T')[0];
         waterConditionData.push({ x: date, y: waterCondition });
         waterFlowData.push({ x: date, y: waterFlow });
+        curveData.push({
+          x: parseFloat(waterFlow),
+          y: parseFloat(waterCondition),
+        });
       });
       const [year, name] = filename
         .replace('./outputFiles/', '')
@@ -32,22 +37,35 @@ const getCharts = async (filenames) => {
 
       const waterConditionTitle = `Wykres stanu wody od daty ${name} ${year}`;
       const waterFlowTitle = `Wykres przepływu wody od daty ${name} ${year}`;
-
-      const waterConditionCanvas = createChart(
+      const waterCurveTitle = `Krzywa natężenia przepływu ${name} ${year}`;
+      const waterConditionCanvas = createLineChart(
         waterConditionData,
         waterConditionTitle,
-        "Powierzchnia"
+        "Data",
+        "Stan wody m"
       );
-      const waterFlowCanvas = createChart(waterFlowData, waterFlowTitle, "m³/s");
-      saveChart(waterConditionCanvas, filename, waterConditionTitle);
-      saveChart(waterFlowCanvas, filename, waterFlowTitle);
+      const waterFlowCanvas = createLineChart(
+        waterFlowData,
+        waterFlowTitle,
+        "Data",
+        'Przepływ m³/s'
+      );
+      const waterCurveCanvas = createScatterChart(
+        curveData,
+        waterCurveTitle,
+        'Przepływ m³/s',
+        'Stan wody m'
+      );
+      saveChart(waterConditionCanvas, waterConditionTitle);
+      saveChart(waterFlowCanvas, waterFlowTitle);
+      saveChart(waterCurveCanvas, waterCurveTitle);
     } catch (err) {
       console.error(err);
     }
   }
 };
 
-const createChart = (data, title, text) => {
+const createLineChart = (data, title, textX, textY) => {
   const chartConfig = {
     type: 'line', // Typ wykresu liniowy
     data: {
@@ -59,7 +77,7 @@ const createChart = (data, title, text) => {
           backgroundColor: 'rgba(54, 162, 235, 0.25)', // Kolor wypełnienia obszaru pod wykresem
           borderColor: 'rgba(54, 162, 235)', // Kolor linii wykresu
           borderWidth: 2, // Grubość linii wykresu
-          pointRadius: 0, //Brak zaznaczeń punktów
+          pointRadius: 0, // Rozmiar punktów
         },
       ],
     },
@@ -71,28 +89,73 @@ const createChart = (data, title, text) => {
           },
           title: {
             display: true,
-            text: text.toString(),
+            text: textY.toString(),
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: textX.toString(),
           },
         },
       },
     },
   };
 
-  const canvas = createCanvas(600, 400); // Tworzenie canvasa o wymiarach 600x400 pikseli
+  const canvas = createCanvas(800, 600);
   const ctx = canvas.getContext('2d');
   const chart = new Chart(ctx, chartConfig);
   return canvas;
 };
 
-const saveChart = (canvas, filename, title) => {
-  const chartName = filename
-    .replace('.csv', `-${title.replace(/\s+/g, '-')}.png`)
-    .replace('./outputFiles', './charts');
-  //console.log(chartName)
-  const out = fs.createWriteStream(chartName);
+const createScatterChart = (data, title, textX, textY) => {
+  const chartConfig = {
+    type: 'scatter',
+    data: {
+      datasets: [
+        {
+          label: title.toString(),
+          data: data, // użycie tablicy z danymi
+          showLine: false,
+          backgroundColor: 'rgba(255, 99, 132, 0.25)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2,
+          pointRadius: 1, // Rozmiar punktów
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          ticks: {
+            beginAtZero: true, // Wyświetlanie osi y od zera
+          },
+          title: {
+            display: true,
+            text: textY.toString(),
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: textX.toString(),
+          },
+        },
+      },
+    },
+  };
+  const canvas = createCanvas(800, 600);
+  const ctx = canvas.getContext('2d');
+  const chart = new Chart(ctx, chartConfig);
+  return canvas;
+};
+
+const saveChart = (canvas, title) => {
+  const path = `./charts/${title.replace(/\s+/g, '-')}.png`
+  const out = fs.createWriteStream(path);
   const stream = canvas.createPNGStream();
   stream.pipe(out);
-  out.on('finish', () => console.log(`The ${chartName} file was created.`));
+  out.on('finish', () => console.log(`The ${path} file was created.`));
 };
 
 export default getCharts;
