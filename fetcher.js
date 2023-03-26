@@ -1,6 +1,8 @@
-import helpers from './helpers.js';
-import fs from 'fs';
+import helpers from "./helpers.js";
+import fs from "fs";
+import getChart from "./chart.js";
 const { getYearFromFilename, getRiverDataById, saveToFile } = helpers;
+
 
 const stations = {
   152200020: "Trzciniec",

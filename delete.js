@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const filePath = "./outputFiles"
+const filePath = "./outputFiles";
 
 fs.readdir(filePath, (err, files) => {
   if (err) console.log(err);

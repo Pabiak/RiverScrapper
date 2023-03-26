@@ -11,7 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "canvas": "^2.11.0",
+    "chart.js": "^4.2.1",
     "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
     "node-fetch": "^3.3.0"
   }
 }
