@@ -49,7 +49,7 @@ const createChart = (data) => {
           backgroundColor: "rgba(255,255,255)", // Kolor wypełnienia obszaru pod wykresem
           borderColor: "rgba(54, 162, 235, 1)", // Kolor linii wykresu
           borderWidth: 1, // Grubość linii wykresu
-          pointRadius: 0, //Brak zaznaczeń punktów
+          pointRadius: 1, //Brak zaznaczeń punktów
         },
       ],
     },
