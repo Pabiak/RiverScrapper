@@ -46,19 +46,19 @@ export const getCharts = async (filenames) => {
         waterConditionData,
         waterConditionTitle,
         'Data',
-        'Stan wody m'
+        'Stan wody [m]'
       );
       const waterFlowCanvas = createLineChart(
         waterFlowData,
         waterFlowTitle,
         'Data',
-        'Przepływ m³/s'
+        'Przepływ [m³/s]'
       );
       const waterCurveCanvas = createScatterChart(
         curveData,
         waterCurveTitle,
-        'Przepływ m³/s',
-        'Stan wody m'
+        'Przepływ [m³/s]',
+        'Stan wody [m]'
       );
       saveChart(waterConditionCanvas, waterConditionTitle);
       saveChart(waterFlowCanvas, waterFlowTitle);
