@@ -1,9 +1,12 @@
-import helpers from './helpers.js';
+import {
+  getYearFromFilename,
+  getRiverDataById,
+  saveToFile,
+} from './helpers.js';
 import fs from 'fs';
-import getCharts from './chartGenerator.js';
-const { getYearFromFilename, getRiverDataById, saveToFile } = helpers;
+import { getCharts } from './chartGenerator.js';
 
-const stations = {
+export const stations = {
   152200020: 'Trzciniec',
   152200120: 'Borkowo',
 };
@@ -21,6 +24,7 @@ const months = [
   '11',
   '12',
 ];
+
 const years = ['2015', '2016', '2017'];
 const folderPath = './files';
 

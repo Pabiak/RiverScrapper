@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const getYearFromFilename = (filename) => {
+export const getYearFromFilename = (filename) => {
     const regex = /^codz_([0-9]{4})_[0-9]{2}.csv$/;
     const match = regex.exec(filename);
     if (match) {
@@ -9,12 +9,12 @@ const getYearFromFilename = (filename) => {
     return null;
   };
   
-  const getRiverDataById = (line, id) => {
+  export const getRiverDataById = (line, id) => {
     if (!line.includes(id)) return;
     return line;
   };
   
-  const saveToFile = (stationID, filteredDataByYear, stations) => {
+ export const saveToFile = (stationID, filteredDataByYear, stations) => {
     const stationName = stations[stationID];
     const promises = Object.entries(filteredDataByYear).map(([year, data]) => {
       const filename = `./outputFiles/${year}_${stationName}.csv`;
@@ -31,5 +31,4 @@ const getYearFromFilename = (filename) => {
     });
     return Promise.all(promises);
   };
-export default {getYearFromFilename, getRiverDataById, saveToFile};
   

@@ -2,7 +2,10 @@ import Chart from 'chart.js/auto';
 import { createCanvas } from 'canvas';
 import fs from 'fs';
 
-const getCharts = async (filenames) => {
+export const getCharts = async (filenames) => {
+  const firstStationData = [];
+  const secondStationData = [];
+  const dataArrays = [];
   for (const filename of filenames) {
     const waterConditionData = [];
     const waterFlowData = [];
@@ -13,7 +16,7 @@ const getCharts = async (filenames) => {
       rows.forEach((row) => {
         const [
           id,
-          city,
+          station,
           riverName,
           year,
           month,
@@ -30,6 +33,7 @@ const getCharts = async (filenames) => {
           y: parseFloat(waterCondition),
         });
       });
+
       const [year, name] = filename
         .replace('./outputFiles/', '')
         .replace('.csv', '')
@@ -41,13 +45,13 @@ const getCharts = async (filenames) => {
       const waterConditionCanvas = createLineChart(
         waterConditionData,
         waterConditionTitle,
-        "Data",
-        "Stan wody m"
+        'Data',
+        'Stan wody m'
       );
       const waterFlowCanvas = createLineChart(
         waterFlowData,
         waterFlowTitle,
-        "Data",
+        'Data',
         'Przepływ m³/s'
       );
       const waterCurveCanvas = createScatterChart(
@@ -150,12 +154,55 @@ const createScatterChart = (data, title, textX, textY) => {
   return canvas;
 };
 
+const createTwoStationChart = (data1, data2, title, textX, textY) => {
+  const chartConfig = {
+    type: 'line',
+    data: {
+      labels: ['Listopad', 'Grudzień', 'Styczeń', 'Luty', 'Marzec', 'Kwiecień'],
+      datasets: [
+        {
+          label: 'Stan wody - Stacja 1',
+          data: data1,
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          fill: true,
+        },
+        {
+          label: 'Stan wody - Stacja 2',
+          data: data2,
+          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          fill: true,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          title: {
+            display: true,
+            text: 'Stan wody (m)',
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Miesiące',
+          },
+        },
+      },
+    },
+  };
+  const canvas = createCanvas(800, 600);
+  const ctx = canvas.getContext('2d');
+  const chart = new Chart(ctx, chartConfig);
+  return canvas;
+};
+
 const saveChart = (canvas, title) => {
-  const path = `./charts/${title.replace(/\s+/g, '-')}.png`
+  const path = `./charts/${title.replace(/\s+/g, '-')}.png`;
   const out = fs.createWriteStream(path);
   const stream = canvas.createPNGStream();
   stream.pipe(out);
   out.on('finish', () => console.log(`The ${path} file was created.`));
 };
-
-export default getCharts;
