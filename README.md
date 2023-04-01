@@ -9,9 +9,9 @@ AquaCrawler to program służący do pobierania i analizowania danych hydrologic
 - [x] Wykresy stanu wody od daty dla każdego roku
 - [x] Wykresy przepływu od daty dla każdego roku
 - [x] Wykres krzywej natężenia przepływu dla każdego roku
-- [ ] Wykresy stanu wody od daty dla wszystkich lat
-- [ ] Wykresy przepływu od daty dla wszystkich lat
-- [ ] Wykres krzywej natężenia przepływu dla wszystkich lat
+- [x] Wykresy stanu wody od daty dla wszystkich lat
+- [x] Wykresy przepływu od daty dla wszystkich lat
+- [x] Wykres krzywej natężenia przepływu dla wszystkich lat
 - [ ] Wykresy stanu wody dla dwóch stacji w półroczu zimowym (listopad - kwiecień) dla każdego roku
 - [ ] Wykresy stanu wody dla dwóch stacji w półroczu zimowym (listopad - kwiecień) dla wszystkich lat
 - [ ] Wstawienie danych stanu wodu do templatki
