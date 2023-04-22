@@ -1,32 +1,32 @@
-# RiverScrapper - pobieranie i obróbka danych o rzekach z IMGW
+# RiverScrapper - fetching and processing data about rivers from IMGW
 
-RiverScrapper to program służący do pobierania i analizowania danych hydrologicznych dotyczących polskich rzek z Instytutu Meteorologii i Gospodarki Wodnej (IMGW). Program pozwala na wykonywanie różnych analiz, w tym generowanie wykresów stanu wody, przepływu oraz krzywej natężenia przepływu.
+RiverScrapper is a program used to download and analyze hydrological data related to Polish rivers from the Institute of Meteorology and Water Management (IMGW). The program allows for generating charts of water level, flow rate, and flow intensity curve.
 
-## Lista ToDo
+## Todo List
 
-- [x] Pobieranie danych z IMGW
-- [x] Pobranie wybranych rzek do osobnych plików
-- [x] Wykresy stanu wody od daty dla każdego roku
-- [x] Wykresy przepływu od daty dla każdego roku
-- [x] Wykres krzywej natężenia przepływu dla każdego roku
-- [x] Wykresy stanu wody od daty dla wszystkich lat
-- [x] Wykresy przepływu od daty dla wszystkich lat
-- [x] Wykres krzywej natężenia przepływu dla wszystkich lat
-- [x] Usuwanie plików
-## Wykresy
+- [x] Downloading data from IMGW
+- [x] Downloading selected rivers to separate files
+- [x] Charts of water level from a date for each year
+- [x] Charts of flow rate from a date for each year
+- [x] Rating curve chart for each year
+- [x] Charts of water level from a date for all years
+- [x] Charts of flow rate from a date for all years
+- [x] Rating curve chart for all years
+- [x] Deleting downloaded files
 
-### Wykres stanu wody od daty
+## Charts
 
-Wykres przedstawiający zmianę stanu wody dla wybranej stacji pomiarowej od wybranej daty. Na osi Y znajdują się wartości stanu wody, a na osi X daty pomiarów. 
-![Wykres stanu wody od daty](./img/stanWody.png)
+### Water Level Chart from Date
 
-### Wykres przepływu od daty
+A chart showing the change in water level for the selected measurement station from the selected date. Water level values are on the Y-axis, and measurement dates are on the X-axis.
+![Water Level Chart from Date](./img/stanWody.png)
 
-Wykres przedstawiający zmianę przepływu dla wybranej stacji pomiarowej od wybranej daty. Na osi Y znajdują się wartości przepływu, a na osi X daty pomiarów.
-![Wykres przepływu wody od daty](./img/przeplywWody.png)
+### Flow Rate Chart from Date
 
-### Krzywa natężenia przepływu
+A chart showing the change in flow rate for the selected measurement station from the selected date. Flow rate values are on the Y-axis, and measurement dates are on the X-axis.
+![Flow Rate Chart from Date](./img/przeplywWody.png)
 
-Wykres przedstawiający krzywą natężenia przepływu, czyli zależność między stanem wody a przepływem dla wybranej stacji pomiarowej. Na osi Y znajdują się wartości stanu wody, a na osi X wartości przepływu.
-![Wykres przepływu wody od daty](./img/krzywaNatezenia.png)
+### Rating Curve Chart
 
+A chart showing the rating curve, which is the relationship between water level and flow rate for the selected measurement station. Water level values are on the Y-axis, and flow rate values are on the X-axis.
+![Flow Intensity Curve Chart](./img/krzywaNatezenia.png)
