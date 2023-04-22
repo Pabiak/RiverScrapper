@@ -1,8 +1,0 @@
-id, miejscowosc, nazwa rzeki, rok, miesiac, dzien, stan wody, przeplyw (q - m^3/s), 
-
-wykresy:
- - Stan(y) od daty (x) 
- - przeplyw(y) od daty (x)
- - krzywa natezenie przeplywow czyli stan(y) od przeplywu(x)
- - zwiazek dwoch wodowskazów czli wykres stanu wody w półroczu zimowym(listopad - kwiecien) (dwie stacje na jedynym wykresie)
- 

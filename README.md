@@ -4,7 +4,7 @@ RiverScrapper to program służący do pobierania i analizowania danych hydrolog
 
 ## Lista ToDo
 
-- [ ] Pobieranie danych z IMGW
+- [x] Pobieranie danych z IMGW
 - [x] Pobranie wybranych rzek do osobnych plików
 - [x] Wykresy stanu wody od daty dla każdego roku
 - [x] Wykresy przepływu od daty dla każdego roku
@@ -12,7 +12,7 @@ RiverScrapper to program służący do pobierania i analizowania danych hydrolog
 - [x] Wykresy stanu wody od daty dla wszystkich lat
 - [x] Wykresy przepływu od daty dla wszystkich lat
 - [x] Wykres krzywej natężenia przepływu dla wszystkich lat
-- [ ] Usuwanie plików
+- [x] Usuwanie plików
 ## Wykresy
 
 ### Wykres stanu wody od daty

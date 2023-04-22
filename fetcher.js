@@ -5,7 +5,7 @@ import {
   getRiverDataById,
   saveToFile,
 } from './helpers.js';
-
+import { downloadAndExtractFiles } from './fileDownloader.js';
 const stations = {
   152200020: 'Trzciniec',
   152200120: 'Borkowo',
@@ -28,6 +28,8 @@ const months = [
 
 const years = ['2015', '2016', '2017'];
 const folderPath = './files';
+
+await downloadAndExtractFiles(years, months);
 
 const fileData = fs
   .readdirSync(folderPath)
