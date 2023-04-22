@@ -3,9 +3,6 @@ import { createCanvas } from 'canvas';
 import fs from 'fs';
 
 export const getCharts = async (filenames) => {
-  const firstStationData = [];
-  const secondStationData = [];
-  const dataArrays = [];
   for (const filename of filenames) {
     const waterConditionData = [];
     const waterFlowData = [];
@@ -46,19 +43,19 @@ export const getCharts = async (filenames) => {
         waterConditionData,
         waterConditionTitle,
         'Data',
-        'Stan wody m'
+        'Stan wody [m]'
       );
       const waterFlowCanvas = createLineChart(
         waterFlowData,
         waterFlowTitle,
         'Data',
-        'Przepływ m³/s'
+        'Przepływ [m³/s]'
       );
       const waterCurveCanvas = createScatterChart(
         curveData,
         waterCurveTitle,
-        'Przepływ m³/s',
-        'Stan wody m'
+        'Przepływ [m³/s]',
+        'Stan wody [m]'
       );
       saveChart(waterConditionCanvas, waterConditionTitle);
       saveChart(waterFlowCanvas, waterFlowTitle);
@@ -71,15 +68,15 @@ export const getCharts = async (filenames) => {
 
 const createLineChart = (data, title, textX, textY) => {
   const chartConfig = {
-    type: 'line', // Typ wykresu liniowy
+    type: 'line',
     data: {
       labels: data.map((d) => d.x), // Oś x - wartości pierwszej kolumny
       datasets: [
         {
           label: title.toString(),
           data: data.map((d) => d.y), // Oś y - wartości drugiej kolumny
-          backgroundColor: 'rgba(54, 162, 235, 0.25)', // Kolor wypełnienia obszaru pod wykresem
-          borderColor: 'rgba(54, 162, 235)', // Kolor linii wykresu
+          backgroundColor: 'rgba(54, 162, 235, 0.25)',
+          borderColor: 'rgba(54, 162, 235)',
           borderWidth: 2, // Grubość linii wykresu
           pointRadius: 0, // Rozmiar punktów
         },
@@ -89,7 +86,7 @@ const createLineChart = (data, title, textX, textY) => {
       scales: {
         y: {
           ticks: {
-            beginAtZero: true, // Wyświetlanie osi y od zera
+            beginAtZero: true,
           },
           title: {
             display: true,
@@ -119,12 +116,12 @@ const createScatterChart = (data, title, textX, textY) => {
       datasets: [
         {
           label: title.toString(),
-          data: data, // użycie tablicy z danymi
+          data: data,
           showLine: false,
           backgroundColor: 'rgba(255, 99, 132, 0.25)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 2,
-          pointRadius: 1, // Rozmiar punktów
+          pointRadius: 1,
         },
       ],
     },
@@ -132,7 +129,7 @@ const createScatterChart = (data, title, textX, textY) => {
       scales: {
         y: {
           ticks: {
-            beginAtZero: true, // Wyświetlanie osi y od zera
+            beginAtZero: true,
           },
           title: {
             display: true,
@@ -143,51 +140,6 @@ const createScatterChart = (data, title, textX, textY) => {
           title: {
             display: true,
             text: textX.toString(),
-          },
-        },
-      },
-    },
-  };
-  const canvas = createCanvas(800, 600);
-  const ctx = canvas.getContext('2d');
-  const chart = new Chart(ctx, chartConfig);
-  return canvas;
-};
-
-const createTwoStationChart = (data1, data2, title, textX, textY) => {
-  const chartConfig = {
-    type: 'line',
-    data: {
-      labels: ['Listopad', 'Grudzień', 'Styczeń', 'Luty', 'Marzec', 'Kwiecień'],
-      datasets: [
-        {
-          label: 'Stan wody - Stacja 1',
-          data: data1,
-          borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          fill: true,
-        },
-        {
-          label: 'Stan wody - Stacja 2',
-          data: data2,
-          borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          fill: true,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          title: {
-            display: true,
-            text: 'Stan wody (m)',
-          },
-        },
-        x: {
-          title: {
-            display: true,
-            text: 'Miesiące',
           },
         },
       },
