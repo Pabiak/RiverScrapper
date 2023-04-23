@@ -27,7 +27,7 @@ const saveToFile = (stationID, filteredDataByYear, stations) => {
       fs.writeFile(filename, fileData, (err) => {
         if (err) reject(err);
         console.log(
-          `Dane dla stacji ${stationName} z roku ${year} zostały zapisane do pliku ${filename}.`
+          `Station data ${stationName} from year ${year} have been saved to ${filename}.`
         );
         resolve(filename);
       });
@@ -117,7 +117,7 @@ stationKeys.forEach(async (station) => {
       if (file === selectedFiles[selectedFiles.length - 1]) {
         saveToFile(station, filteredDataByYear, stations)
           .then((filenames) => getCharts(filenames))
-          .catch((err) => console.error('Wystąpił błąd:', err));
+          .catch((err) => console.error('Error:', err));
       }
     } catch (err) {
       console.log(err);
@@ -127,6 +127,6 @@ stationKeys.forEach(async (station) => {
   saveToFile(station, filteredDataAllYears, stations)
     .then((filenames) => getCharts(filenames))
     .catch((err) =>
-      console.error('Wystąpił błąd podczas zapisu wszystkich lat:', err)
+      console.error('An error occurred while saving all years:', err)
     );
 });

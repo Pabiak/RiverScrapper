@@ -36,26 +36,26 @@ export const getCharts = async (filenames) => {
         .replace('.csv', '')
         .split('_');
 
-      const waterConditionTitle = `Wykres stanu wody od daty ${name} ${year}`;
-      const waterFlowTitle = `Wykres przepływu wody od daty ${name} ${year}`;
-      const waterCurveTitle = `Krzywa natężenia przepływu ${name} ${year}`;
+      const waterConditionTitle = `Water level chart from date ${name} ${year}`;
+      const waterFlowTitle = `Water flow chart from date ${name} ${year}`;
+      const waterCurveTitle = `Rating curve chart ${name} ${year}`;
       const waterConditionCanvas = createLineChart(
         waterConditionData,
         waterConditionTitle,
-        'Data',
-        'Stan wody [m]'
+        'Date',
+        'Water level [m]'
       );
       const waterFlowCanvas = createLineChart(
         waterFlowData,
         waterFlowTitle,
-        'Data',
-        'Przepływ [m³/s]'
+        'Date',
+        'Water flow [m³/s]'
       );
       const waterCurveCanvas = createScatterChart(
         curveData,
         waterCurveTitle,
-        'Przepływ [m³/s]',
-        'Stan wody [m]'
+        'Water flow [m³/s]',
+        'Water level [m]'
       );
       saveChart(waterConditionCanvas, waterConditionTitle);
       saveChart(waterFlowCanvas, waterFlowTitle);
