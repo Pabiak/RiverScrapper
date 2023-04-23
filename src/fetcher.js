@@ -3,6 +3,7 @@ import { getCharts } from './chartGenerator.js';
 import {downloadAndExtractFiles} from './fileDownloader.js';
 import { deleteFiles } from './filesRemover.js';
 import config from '../config.json' assert { type: "json" };
+
 const getYearFromFilename = (filename) => {
   const regex = /^codz_([0-9]{4})_[0-9]{2}.csv$/;
   const match = regex.exec(filename);
@@ -35,11 +36,26 @@ const saveToFile = (stationID, filteredDataByYear, stations) => {
   return Promise.all(promises);
 };
 
+const SELECTED_FILES_PATH="../selectedRiverFiles"
+const CHARTS_PATH="../charts"
+const FILES_PATH="../files"
+
+if (!fs.existsSync(SELECTED_FILES_PATH)) {
+  fs.mkdirSync(SELECTED_FILES_PATH);
+}
+if (!fs.existsSync(CHARTS_PATH)) {
+  fs.mkdirSync(CHARTS_PATH);
+}
+if (!fs.existsSync(FILES_PATH)) {
+  fs.mkdirSync(FILES_PATH);
+}
+
+
+
 const stations = config.stations;
-
 const months = config.months;
-
 const years = config.years;
+
 const folderPath = '../files';
 
 await deleteFiles();

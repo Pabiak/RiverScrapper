@@ -18,7 +18,7 @@ export const deleteFiles = async () => {
         }
       });
     }
-    console.log("Files have been deleted");
+    console.log("Previous files have been deleted");
     resolve();
   });
 };
