@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { getCharts } from './chartGenerator.js';
 import {downloadAndExtractFiles} from './fileDownloader.js';
-import { deleteFiles } from './filesRemover.js';
+import { deleteFiles } from './fileRemover.js';
 import config from '../config.json' assert { type: "json" };
 
 const getYearFromFilename = (filename) => {
