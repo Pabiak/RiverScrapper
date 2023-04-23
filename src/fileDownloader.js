@@ -2,7 +2,7 @@ import https from 'https';
 import fs from 'fs';
 import unzipper from 'unzipper';
 
-const path = './files';
+const path = '../files';
 
 export const downloadAndExtractFiles = async (years, months) => {
   for (const year of years) {

@@ -2,7 +2,7 @@ import fs from 'fs';
 import { getCharts } from './chartGenerator.js';
 import {downloadAndExtractFiles} from './fileDownloader.js';
 import { deleteFiles } from './filesRemover.js';
-import config from './config.json' assert { type: "json" };
+import config from '../config.json' assert { type: "json" };
 const getYearFromFilename = (filename) => {
   const regex = /^codz_([0-9]{4})_[0-9]{2}.csv$/;
   const match = regex.exec(filename);
@@ -20,7 +20,7 @@ const getRiverDataById = (line, id) => {
 const saveToFile = (stationID, filteredDataByYear, stations) => {
   const stationName = stations[stationID];
   const promises = Object.entries(filteredDataByYear).map(([year, data]) => {
-    const filename = `./outputFiles/${year}_${stationName}.csv`;
+    const filename = `../selectedRiverFiles/${year}_${stationName}.csv`;
     const fileData = data.join("\n");
     return new Promise((resolve, reject) => {
       fs.writeFile(filename, fileData, (err) => {
@@ -40,7 +40,7 @@ const stations = config.stations;
 const months = config.months;
 
 const years = config.years;
-const folderPath = './files';
+const folderPath = '../files';
 
 await deleteFiles();
 await downloadAndExtractFiles(years, months);

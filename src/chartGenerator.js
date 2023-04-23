@@ -32,7 +32,7 @@ export const getCharts = async (filenames) => {
       });
 
       const [year, name] = filename
-        .replace('./outputFiles/', '')
+        .replace('../selectedRiverFiles/', '')
         .replace('.csv', '')
         .split('_');
 
@@ -152,7 +152,7 @@ const createScatterChart = (data, title, textX, textY) => {
 };
 
 const saveChart = (canvas, title) => {
-  const path = `./charts/${title.replace(/\s+/g, '-')}.png`;
+  const path = `../charts/${title.replace(/\s+/g, '-')}.png`;
   const out = fs.createWriteStream(path);
   const stream = canvas.createPNGStream();
   stream.pipe(out);

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const filePaths = ['./outputFiles', './charts', './files'];
+const filePaths = ['../selectedRiverFiles', '../charts', '../files'];
 
 export const deleteFiles = async () => {
   await new Promise((resolve, reject) => {
