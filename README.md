@@ -1,6 +1,6 @@
-# RiverScrapper - fetching and processing data about rivers from IMGW
+# RiverScrapper - fetching and processing riversdata about rivers from IMGW
 
-RiverScrapper is a program used to download and analyze hydrological data related to Polish rivers from the Institute of Meteorology and Water Management (IMGW). The program allows for generating charts of water level, flow rate, and flow intensity curve.
+RiverScrapper is a program used to download and analyze hydrological data related to Polish rivers from the Institute of Meteorology and Water Management (IMGW). The program allows for generating charts of water level, flow rate, and rating curve.
 
 ## Todo List
 
